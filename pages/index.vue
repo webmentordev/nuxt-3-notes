@@ -17,6 +17,7 @@
                         <button @click="removeNote(note.id)" class="absolute -right-2 -top-3">
                             <Icon class="text-red-600 text-lg" name="material-symbols:delete-rounded" />
                         </button>
+                        <Item :note="note" v-if="note.expand" />
                         <div class="flex">
                             <strong>Posted: </strong>
                             <p class="text-indigo-600 ml-2">{{ note.created }}</p>
@@ -40,7 +41,8 @@
     const pb = new PocketBase(api);
 
     const results = await pb.collection('notes').getFullList({
-        sort: '-created'
+        sort: '-created',
+        expand: "history_via_note",
     });
     notes.value = results;
 

@@ -25,6 +25,14 @@
 
     async function updateNote(){
         success.value = "";
+        if(text.value == result.note){
+            success.value = "Note is same. So not updated!";
+            return;
+        }
+        await pb.collection('history').create({
+            text: result.note,
+            note: result.id
+        });
         await pb.collection('notes').update(id, {
             note: text.value
         });
